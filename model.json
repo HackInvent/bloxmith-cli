@@ -1,0 +1,50 @@
+{
+  "kind": "cli",
+  "title": "CLI",
+  "ports": {
+    "inputs": [
+      {
+        "id": 1,
+        "name": "in",
+        "title": "In",
+        "accepts": [
+          "message/*",
+          "text/plain",
+          "application/json",
+          "file/path"
+        ],
+        "multiplicity": "many",
+        "required": false,
+        "execution_requirement": "required_for_execution"
+      }
+    ],
+    "outputs": [
+      {
+        "id": 1,
+        "name": "stdout",
+        "title": "Out",
+        "emits": [
+          "message/*",
+          "text/plain"
+        ],
+        "multiplicity": "many",
+        "command": "printf \"%s\" @in"
+      }
+    ]
+  },
+  "config": {
+    "working_directory": "",
+    "timeout_sec": 30,
+    "max_stdout_chars": 200000,
+    "use_shell": true,
+    "quote_inputs": true
+  },
+  "runtime": {
+    "initial_state": "waiting",
+    "runtime_executable": true,
+    "active_worker": true,
+    "file_browser": true,
+    "centralized_executor": "generic",
+    "centralized_dependency_mode": "all_inputs"
+  }
+}

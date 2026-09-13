@@ -1,0 +1,81 @@
+<div class="cw-block-inspector cw-cli-inspector" data-block-inspector-root data-node-id="{{ node_id }}" data-node-type="{{ node_type }}">
+  <div class="inspector-selection {{ summary_hidden }}" data-node-type="{{ node_type }}">
+    <div class="inspector-node-card">
+      <div class="inspector-node-icon">{{ node_icon }}</div>
+      <div class="inspector-node-copy">
+        <strong>{{ node_title }}</strong>
+        <span>{{ node_kind }}</span>
+      </div>
+      <span class="inspector-node-tag">{{ node_tag }}</span>
+    </div>
+    <div class="inspector-tabs">
+      <button class="inspector-tab {{ general_active }}" data-inspector-tab="general" type="button">Général</button>
+      <button class="inspector-tab {{ ports_active }} {{ ports_tab_hidden }}" data-inspector-tab="ports" type="button" {{ ports_tab_disabled }}>Ports</button>
+    </div>
+  </div>
+
+  <div class="inspector-view {{ general_hidden }}" data-inspector-panel-tab="general">
+    <div class="field-group {{ title_hidden }}">
+      <label>Nom du node</label>
+      <input data-node-title-input type="text" placeholder="{{ node_title_placeholder }}" value="{{ node_title }}" />
+    </div>
+    <div class="inspector-actions {{ actions_hidden }}">
+      <button class="ghost-btn {{ duplicate_hidden }}" data-block-action="duplicate" type="button">Dupliquer</button>
+      <button class="danger-btn {{ delete_hidden }}" data-block-action="delete" type="button">Supprimer le bloc</button>
+    </div>
+    <p class="inspector-copy cli-warning">
+      Ce bloc exécute des commandes locales avec les droits du processus serveur. À utiliser à vos risques et périls.
+    </p>
+    {{ working_directory_browser_html }}
+    <div class="field-grid">
+      <div class="field-group">
+        <label>Timeout secondes</label>
+        <input data-cli-timeout data-block-config-field="timeout_sec" data-block-value-type="integer" type="number" min="1" max="3600" step="1" value="{{ timeout_sec }}" />
+      </div>
+      <div class="field-group">
+        <label>Max stdout chars</label>
+        <input data-cli-max-stdout data-block-config-field="max_stdout_chars" data-block-value-type="integer" type="number" min="1" max="10000000" step="1000" value="{{ max_stdout_chars }}" />
+      </div>
+    </div>
+    <label class="checkbox-field">
+      <input data-cli-use-shell data-block-config-field="use_shell" data-block-value-type="boolean" type="checkbox" {{ use_shell_checked }} />
+      <span>Utiliser le shell</span>
+    </label>
+    <label class="checkbox-field">
+      <input data-cli-quote-inputs data-block-config-field="quote_inputs" data-block-value-type="boolean" type="checkbox" {{ quote_inputs_checked }} {{ quote_inputs_disabled }} />
+      <span>Shell-quoter les valeurs @input</span>
+    </label>
+    <div class="ports-editor-section cli-commands-section">
+      <div class="ports-editor-header">
+        <span class="group-label">Commandes par sortie</span>
+      </div>
+      <div class="cli-commands-list">{{ commands_html }}</div>
+    </div>
+    <div class="inspector-actions">
+      <button class="solid-btn" data-block-apply type="button" disabled>Appliquer</button>
+    </div>
+  </div>
+
+  <div class="inspector-view {{ ports_hidden }}" data-inspector-panel-tab="ports">
+    <div class="ports-editor-section">
+      <div class="ports-editor-header">
+        <span class="group-label">Entrées</span>
+        <span class="ports-editor-actions">
+          <button class="ghost-btn add-port-btn {{ add_mcp_input_hidden }}" data-add-mcp-input-port type="button" {{ add_mcp_input_disabled }}>+ MCP</button>
+          <button class="ghost-btn add-port-btn {{ add_input_hidden }}" data-add-input-port type="button" {{ add_input_disabled }}>+ Ajouter une entrée</button>
+        </span>
+      </div>
+      <div class="ports-editor-list">{{ inputs_html }}</div>
+    </div>
+    <div class="ports-editor-section">
+      <div class="ports-editor-header">
+        <span class="group-label">Sorties</span>
+        <button class="ghost-btn add-port-btn {{ add_output_hidden }}" data-add-output-port type="button" {{ add_output_disabled }}>+ Ajouter une sortie</button>
+      </div>
+      <div class="ports-editor-list">{{ outputs_html }}</div>
+    </div>
+    <div class="inspector-copy">
+      Les noms sont normalisés automatiquement : minuscules, espaces remplacés par <code>_</code>.
+    </div>
+  </div>
+</div>

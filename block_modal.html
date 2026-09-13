@@ -1,0 +1,97 @@
+<div class="modal-panel cw-cli-modal" role="dialog" aria-modal="true" aria-labelledby="{{ node_id }}BlockModalTitle" data-generic-block-modal-root data-block-runtime-refresh="autonomous" data-cli-modal-root data-node-id="{{ node_id }}" data-node-kind="{{ node_kind }}">
+  <div class="modal-header">
+    <div>
+      <span class="panel-kicker">Bloc {{ node_kind_title }}</span>
+      <h2 id="{{ node_id }}BlockModalTitle">{{ node_title }}</h2>
+    </div>
+    <div class="modal-actions">
+      <button class="ghost-btn" data-close-block-modal type="button">Fermer</button>
+    </div>
+  </div>
+
+  <div class="cli-modal-body">
+    <div class="cli-modal-tablist" role="tablist" aria-label="Sections du bloc CLI">
+      <button class="cli-modal-tab" data-cli-modal-tab data-cli-tab-id="command" type="button" role="tab" aria-selected="true" tabindex="0">
+        <span>Commande</span>
+        <small>Ligne de commande</small>
+      </button>
+      <button class="cli-modal-tab" data-cli-modal-tab data-cli-tab-id="attributes" type="button" role="tab" aria-selected="false" tabindex="-1">
+        <span>Attributs</span>
+        <small>Timeout, shell, stdout</small>
+      </button>
+      <button class="cli-modal-tab" data-cli-modal-tab data-cli-tab-id="runtime" type="button" role="tab" aria-selected="false" tabindex="-1">
+        <span>Ports & état</span>
+        <small>Connexions et dernier run</small>
+      </button>
+    </div>
+
+    <div class="cli-modal-panels">
+      <section class="cli-modal-panel" data-cli-modal-panel data-cli-tab-id="command" role="tabpanel">
+        <div class="cli-command-editor-layout">
+          <section class="cli-command-editor-main">
+            <div class="cli-command-editor-header">
+              <div>
+                <span class="group-label">Commandes par sortie</span>
+                <h3>Ligne de commande exécutée</h3>
+                <p>Chaque sortie possède sa commande. Utilise <code>@nom_input</code> pour injecter une entrée. Ctrl+Enter applique.</p>
+              </div>
+              <span class="cli-command-count" data-cli-command-count>0 commande</span>
+            </div>
+            <div class="cli-commands-list" data-cli-commands-list>
+              {{ commands_html }}
+            </div>
+          </section>
+
+          <aside class="cli-reference-panel">
+            <span class="group-label">Repères</span>
+            <p class="field-hint">Les valeurs <code>@input</code> sont remplacées au moment du run, puis shell-quotées si l'option est active.</p>
+            <div class="cli-reference-list">
+              {{ input_refs_html }}
+            </div>
+            <div class="cli-reference-example">
+              <strong>Exemple</strong>
+              <code>printf "%s" @in</code>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="cli-modal-panel" data-cli-modal-panel data-cli-tab-id="attributes" role="tabpanel" hidden>
+        <div class="cli-attributes-grid">
+          <section class="cli-modal-section">
+            <div class="ports-editor-header"><span class="group-label">Identité</span></div>
+            {{ title_field_html }}
+          </section>
+          <section class="cli-modal-section">
+            <div class="ports-editor-header"><span class="group-label">Configuration</span></div>
+            <p class="inspector-copy cli-warning">
+              Ce bloc exécute des commandes locales avec les droits du processus serveur.
+            </p>
+            {{ attributes_html }}
+          </section>
+        </div>
+      </section>
+
+      <section class="cli-modal-panel" data-cli-modal-panel data-cli-tab-id="runtime" role="tabpanel" hidden>
+        <div class="cli-attributes-grid">
+          <section class="cli-modal-section">
+            <div class="ports-editor-header"><span class="group-label">Ports</span></div>
+            {{ ports_html }}
+          </section>
+          <section class="cli-modal-section">
+            <div class="ports-editor-header"><span class="group-label">Dernier état</span></div>
+            {{ runtime_html }}
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="cli-modal-footer">
+    <span class="field-hint">Les modifications restent locales jusqu'à validation.</span>
+    <div class="modal-actions">
+      <button class="ghost-btn" data-close-block-modal type="button">Annuler</button>
+      <button class="solid-btn" data-block-apply type="button" disabled>Appliquer</button>
+    </div>
+  </div>
+</div>
