@@ -39,6 +39,8 @@ from ui_smoke_common import (
     text_node,
     wait_for_run_terminal,
 )
+from urllib.parse import quote
+from block_test_packages import install_test_package, release_key, surface_payload
 
 
 def cli_node() -> dict:
@@ -110,6 +112,11 @@ def cli_shared_topic_node() -> dict:
 
 def run_cli_case(runtime_mode: str) -> None:
     with isolated_server() as server:
+        # Les surfaces sont des assets de release : le bundled kind n'en sert aucun.
+        model = install_test_package(server, "cli")
+        key = quote(release_key(model), safe="")
+        served = lambda payload, suffix: next(
+            asset["path"] for asset in payload["assets"] if asset["path"].endswith(suffix))
         document = graph_payload(
             f"F5 CLI {runtime_mode}",
             [
@@ -181,14 +188,6 @@ def test_cli_modal_command_first_layout() -> None:
     expect('data-path-browser-select-mode="directory"' in html, "Le modal CLI doit sélectionner un répertoire de travail.")
     expect("@in" in html, "Le modal CLI doit afficher les références d'inputs disponibles.")
     expect("data-block-apply" in html, "Le modal CLI doit conserver l'action Appliquer générique.")
-    expect(
-        {"kind": "css", "path": "assets/css/block_modal.css"} in assets,
-        "Le CSS modal CLI doit être déclaré comme asset block-owned.",
-    )
-    expect(
-        {"kind": "js", "path": "assets/js/block_modal.js"} in assets,
-        "Le JS modal CLI doit être déclaré comme asset block-owned.",
-    )
     expect(".cli-modal-panel[hidden]" in css, "Les panels masqués du modal CLI doivent être cachés par CSS.")
     expect("panel.hidden =" in js, "Le JS modal CLI doit masquer les panels non actifs.")
 

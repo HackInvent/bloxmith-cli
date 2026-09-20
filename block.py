@@ -49,16 +49,6 @@ class CliBlock(BlockDefinition):
     """Autonomous block implementation for `CliBlock`."""
     kind = "cli"
 
-    def ui_assets(self, surface: str = "modal") -> list[dict[str, str]]:
-        """Return CLI-owned assets for the command-first modal."""
-
-        if surface == "modal":
-            return [
-                {"kind": "css", "path": "assets/css/block_modal.css"},
-                {"kind": "js", "path": "assets/js/block_modal.js"},
-            ]
-        return []
-
     def render_modal(self, *, node: dict[str, Any], payload: dict[str, Any] | None = None) -> dict[str, Any]:
         """Render the CLI block modal with command editing as the primary tab."""
 
