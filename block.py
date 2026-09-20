@@ -143,7 +143,7 @@ class CliBlock(BlockDefinition):
 
         return (
             '<div class="field-group">'
-            "<label>Nom du bloc</label>"
+            "<label>Block name</label>"
             f'<input data-block-title-field type="text" autocomplete="off" value="{escape(title, quote=True)}" />'
             "</div>"
         )
@@ -209,7 +209,7 @@ class CliBlock(BlockDefinition):
         """
         outputs = node.get("outputs") if isinstance(node.get("outputs"), list) else []
         if not outputs:
-            return '<div class="ports-editor-empty">Aucune sortie CLI.</div>'
+            return '<div class="ports-editor-empty">No CLI output.</div>'
         rows: list[str] = []
         for port in outputs:
             if not isinstance(port, dict):
@@ -246,7 +246,7 @@ class CliBlock(BlockDefinition):
             if name:
                 refs.append(f"@{name}")
         if not refs:
-            return '<div class="ports-editor-empty">Aucune entrée disponible.</div>'
+            return '<div class="ports-editor-empty">No input available.</div>'
         return "\n".join(f"<code>{escape(ref)}</code>" for ref in refs)
 
     def _truncate(self, value: str, max_length: int) -> str:
@@ -496,7 +496,7 @@ class CliBlock(BlockDefinition):
                 "command": command_template,
                 "expanded_command": expanded_command,
                 "stdout": stdout,
-                "stderr": stderr or f"Timeout CLI après {config['timeout_sec']}s.",
+                "stderr": stderr or f"CLI timeout after {config['timeout_sec']}s.",
                 "exit_code": -1,
                 "duration": round(time.perf_counter() - started, 3),
                 "stdout_truncated": stdout_truncated,
