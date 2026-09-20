@@ -161,7 +161,7 @@ def run_cli_shared_topic_case(runtime_mode: str) -> None:
         expect(run.get("status") == "success", f"The shared-topic CLI {runtime_mode} run must succeed.")
         expect(run.get("output_values", {}).get("cli-1:1", {}).get("value") == "same source|same source", "Both CLI inputs wired to the same topic are not fed.")
         logs = "\n".join(run.get("node_logs", {}).get("cli-1", []))
-        expect(".1 <=" in logs and ".2 <=" in logs, "Les deux ports CLI ne loggent pas la réception du topic partagé.")
+        expect(".1 <=" in logs and ".2 <=" in logs, "The two CLI ports do not log the reception of the shared topic.")
 
 
 def test_cli_modal_command_first_layout() -> None:
@@ -173,9 +173,9 @@ def test_cli_modal_command_first_layout() -> None:
     css = (ROOT / "blocs/cli/assets/css/block_modal.css").read_text(encoding="utf-8")
     js = (ROOT / "blocs/cli/assets/js/block_modal.js").read_text(encoding="utf-8")
 
-    expect("cw-cli-modal" in html, "Le modal CLI doit utiliser son layout autonome agrandi.")
-    expect('data-block-runtime-refresh="autonomous"' in html, "Le modal CLI doit etre protege du rafraichissement centralise.")
-    expect("cli-modal-body" in html, "Le modal CLI doit utiliser un layout à onglets.")
+    expect("cw-cli-modal" in html, "The CLI modal must use its own enlarged layout.")
+    expect('data-block-runtime-refresh="autonomous"' in html, "The CLI modal must be protected from the centralized refresh.")
+    expect("cli-modal-body" in html, "The CLI modal must use a tabbed layout.")
     expect('data-cli-tab-id="command"' in html, "The CLI modal must expose the Command tab.")
     expect('data-cli-tab-id="attributes"' in html, "The CLI modal must expose the Attributes tab.")
     expect('data-cli-tab-id="runtime"' in html, "The CLI modal must expose the Ports and state tab.")
@@ -186,15 +186,15 @@ def test_cli_modal_command_first_layout() -> None:
     expect('data-block-config-field="working_directory"' in html, "The attributes must keep the directory editable.")
     expect("data-path-browser" in html, "The CLI modal must use the shared path browser for the directory.")
     expect('data-path-browser-select-mode="directory"' in html, "The CLI modal must select a working directory.")
-    expect("@in" in html, "Le modal CLI doit afficher les références d'inputs disponibles.")
+    expect("@in" in html, "The CLI modal must show the available input references.")
     expect("data-block-apply" in html, "The CLI modal must keep the generic Apply action.")
-    expect(".cli-modal-panel[hidden]" in css, "Les panels masqués du modal CLI doivent être cachés par CSS.")
-    expect("panel.hidden =" in js, "Le JS modal CLI doit masquer les panels non actifs.")
+    expect(".cli-modal-panel[hidden]" in css, "The hidden CLI modal panels must be hidden by the CSS.")
+    expect("panel.hidden =" in js, "The CLI modal JS must hide the inactive panels.")
 
     inspector = render_block_inspector_panel("cli", {"node": cli_node()})
     inspector_html = str(inspector.get("html") or "")
     expect("data-path-browser" in inspector_html, "The CLI inspector must use the shared path browser.")
-    expect('data-block-config-field="working_directory"' in inspector_html, "L'inspector CLI doit garder le binding working_directory.")
+    expect('data-block-config-field="working_directory"' in inspector_html, "The CLI inspector must keep the working_directory binding.")
 
 
 def main() -> None:

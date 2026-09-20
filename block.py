@@ -194,9 +194,9 @@ class CliBlock(BlockDefinition):
 
         return render_path_browser_control(
             input_id=input_id,
-            label="Répertoire de travail",
+            label="Working directory",
             value=str(config.get("working_directory") or ""),
-            placeholder="vide = racine du projet",
+            placeholder="empty = project root",
             input_attrs='data-cli-working-directory data-block-config-field="working_directory"',
             select_mode="directory",
         )
@@ -227,7 +227,7 @@ class CliBlock(BlockDefinition):
                             f'placeholder=\'printf "%s" @in\' spellcheck="false" autocapitalize="off" '
                             f'autocomplete="off">{escape(str(port.get("command") or ""))}</textarea>'
                         ),
-                        "  <small>Utilise @nom_input pour injecter une entrée. Les valeurs sont shell-quotées par défaut.</small>",
+                        "  <small>Use @input_name to inject an input. Values are shell-quoted by default.</small>",
                         "</div>",
                     ]
                 )
@@ -300,7 +300,7 @@ class CliBlock(BlockDefinition):
         root = root_dir.expanduser().resolve()
         cwd = self._resolve_working_directory(root, normalized_config["working_directory"])
         if not cwd.exists() or not cwd.is_dir():
-            raise CliBlockError(f"Répertoire de travail CLI introuvable: {cwd}")
+            raise CliBlockError(f"CLI working directory not found: {cwd}")
 
         output_results: list[dict[str, Any]] = []
         for output in outputs:
