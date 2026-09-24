@@ -1,3 +1,5 @@
+import { withProperties } from "./properties.js";
+
 /**
  * Role: Mounts the CLI block modal frontend asset.
  * File Name: block_modal.js
@@ -113,7 +115,7 @@ function moveTab(root, current, direction) {
  *
  * @param {HTMLElement} root - Mounted CLI modal root.
  */
-export function mount(root) {
+function mountOwned(root) {
   const selected = root.querySelector('[data-cli-modal-tab][aria-selected="true"]')
     || root.querySelector("[data-cli-modal-tab]");
   const applyButton = root.querySelector("[data-block-apply]");
@@ -165,4 +167,9 @@ export function mount(root) {
   });
 
   window.setTimeout(() => commandEditors(root)[0]?.focus(), 0);
+}
+
+/** Keep the block behavior and add properties-only accessibility. */
+export function mount(root, ...args) {
+  return withProperties(mountOwned).call(this, root, ...args);
 }
